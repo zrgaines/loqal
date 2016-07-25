@@ -21122,6 +21122,10 @@
 	
 	var _list2 = _interopRequireDefault(_list);
 	
+	var _fetchJsonp = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fetch-jsonp\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21140,12 +21144,27 @@
 	  }
 	
 	  _createClass(Loqal, [{
+	    key: '_handleClick',
+	    value: function _handleClick() {
+	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=30.267153|-97.7430608&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        console.log('parsed json', json);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
 	    key: '_fetchCity',
 	    value: function _fetchCity(searchTerm) {
-	      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyBkvToFB4jZbQ7hM9ZqJoNBb3XXKjunj74').then(function (response) {
+	      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
 	        return response.json();
 	      }).then(function (results) {
 	        console.log(results.results[0].geometry.location);
+	        var lat = results.results[0].geometry.location.lat;
+	        console.log(lat);
+	        var lng = results.results[0].geometry.location.lng;
+	        console.log(lng);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
@@ -21158,7 +21177,12 @@
 	        null,
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_map2.default, null),
-	        _react2.default.createElement(_list2.default, null)
+	        _react2.default.createElement(_list2.default, null),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this._handleClick.bind(this) },
+	          'button '
+	        )
 	      );
 	    }
 	  }]);
@@ -21228,7 +21252,7 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21258,13 +21282,9 @@
 	  }
 	
 	  _createClass(Map, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Map'
-	      );
+	      return _react2.default.createElement("div", { id: "map" });
 	    }
 	  }]);
 	
