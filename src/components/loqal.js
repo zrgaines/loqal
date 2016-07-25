@@ -23,18 +23,6 @@ class Loqal extends React.Component {
         console.log('parsing failed', ex)
       })
   }
-  // _cityInfo(lat, lng) {
-  //   fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
-  //     .then((response) => {
-  //       return response.json()
-  //     })
-  //     .then((results) => {
-  //       console.log(results);
-  //     })
-  //     .catch((ex) => {
-  //       console.log('parsing failed', ex)
-  //     })
-  // }
   render(){
     return(
       <div>
