@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SomeComponent from './components/some_component';
+import Loqal from './components/loqal';
 
-// ReactDOM.render(<SomeComponent />, document.getElementById('some-id'));
+ReactDOM.render(<Loqal />, document.getElementById('container'));
 
 console.log('herro');
