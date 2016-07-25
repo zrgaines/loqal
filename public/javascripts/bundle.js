@@ -61,8 +61,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_loqal2.default, null), document.getElementById('container'));
-	
-	console.log('herro');
 
 /***/ },
 /* 1 */
@@ -21124,6 +21122,10 @@
 	
 	var _list2 = _interopRequireDefault(_list);
 	
+	var _fetchJsonp = __webpack_require__(177);
+	
+	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21142,6 +21144,17 @@
 	  }
 	
 	  _createClass(Loqal, [{
+	    key: '_handleClick',
+	    value: function _handleClick() {
+	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=30.267153|-97.7430608&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        console.log('parsed json', json);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
 	    key: '_fetchCity',
 	    value: function _fetchCity(searchTerm) {
 	      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
@@ -21163,7 +21176,12 @@
 	        null,
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_map2.default, null),
-	        _react2.default.createElement(_list2.default, null)
+	        _react2.default.createElement(_list2.default, null),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this._handleClick.bind(this) },
+	          'button '
+	        )
 	      );
 	    }
 	  }]);
@@ -21376,6 +21394,116 @@
 	}(_react2.default.Component);
 	
 	exports.default = ListItem;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, module], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+	    factory(exports, module);
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, mod);
+	    global.fetchJsonp = mod.exports;
+	  }
+	})(this, function (exports, module) {
+	  'use strict';
+	
+	  var defaultOptions = {
+	    timeout: 5000,
+	    jsonpCallback: 'callback',
+	    jsonpCallbackFunction: null
+	  };
+	
+	  function generateCallbackFunction() {
+	    return 'jsonp_' + Date.now() + '_' + Math.ceil(Math.random() * 100000);
+	  }
+	
+	  // Known issue: Will throw 'Uncaught ReferenceError: callback_*** is not defined' error if request timeout
+	  function clearFunction(functionName) {
+	    // IE8 throws an exception when you try to delete a property on window
+	    // http://stackoverflow.com/a/1824228/751089
+	    try {
+	      delete window[functionName];
+	    } catch (e) {
+	      window[functionName] = undefined;
+	    }
+	  }
+	
+	  function removeScript(scriptId) {
+	    var script = document.getElementById(scriptId);
+	    document.getElementsByTagName('head')[0].removeChild(script);
+	  }
+	
+	  var fetchJsonp = function fetchJsonp(url) {
+	    var options = arguments[1] === undefined ? {} : arguments[1];
+	
+	    var timeout = options.timeout != null ? options.timeout : defaultOptions.timeout;
+	    var jsonpCallback = options.jsonpCallback != null ? options.jsonpCallback : defaultOptions.jsonpCallback;
+	
+	    var timeoutId = undefined;
+	
+	    return new Promise(function (resolve, reject) {
+	      var callbackFunction = options.jsonpCallbackFunction || generateCallbackFunction();
+	
+	      window[callbackFunction] = function (response) {
+	        resolve({
+	          ok: true,
+	          // keep consistent with fetch API
+	          json: function json() {
+	            return Promise.resolve(response);
+	          }
+	        });
+	
+	        if (timeoutId) clearTimeout(timeoutId);
+	
+	        removeScript(jsonpCallback + '_' + callbackFunction);
+	
+	        clearFunction(callbackFunction);
+	      };
+	
+	      // Check if the user set their own params, and if not add a ? to start a list of params
+	      url += url.indexOf('?') === -1 ? '?' : '&';
+	
+	      var jsonpScript = document.createElement('script');
+	      jsonpScript.setAttribute('src', url + jsonpCallback + '=' + callbackFunction);
+	      jsonpScript.id = jsonpCallback + '_' + callbackFunction;
+	      document.getElementsByTagName('head')[0].appendChild(jsonpScript);
+	
+	      timeoutId = setTimeout(function () {
+	        reject(new Error('JSONP request to ' + url + ' timed out'));
+	
+	        clearFunction(callbackFunction);
+	        removeScript(jsonpCallback + '_' + callbackFunction);
+	      }, timeout);
+	    });
+	  };
+	
+	  // export as global function
+	  /*
+	  let local;
+	  if (typeof global !== 'undefined') {
+	    local = global;
+	  } else if (typeof self !== 'undefined') {
+	    local = self;
+	  } else {
+	    try {
+	      local = Function('return this')();
+	    } catch (e) {
+	      throw new Error('polyfill failed because global object is unavailable in this environment');
+	    }
+	  }
+	  
+	  local.fetchJsonp = fetchJsonp;
+	  */
+	
+	  module.exports = fetchJsonp;
+	});
 
 /***/ }
 /******/ ]);
