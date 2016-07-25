@@ -61,8 +61,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_loqal2.default, null), document.getElementById('container'));
-	
-	console.log('herro');
 
 /***/ },
 /* 1 */
@@ -21142,12 +21140,23 @@
 	  }
 	
 	  _createClass(Loqal, [{
+	    key: '_fetchCity',
+	    value: function _fetchCity(searchTerm) {
+	      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyBkvToFB4jZbQ7hM9ZqJoNBb3XXKjunj74').then(function (response) {
+	        return response.json();
+	      }).then(function (results) {
+	        console.log(results.results[0].geometry.location);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_search2.default, null),
+	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_map2.default, null),
 	        _react2.default.createElement(_list2.default, null)
 	      );
@@ -21163,7 +21172,7 @@
 /* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21193,12 +21202,19 @@
 	  }
 	
 	  _createClass(Search, [{
-	    key: 'render',
+	    key: "_handleSearch",
+	    value: function _handleSearch(event) {
+	      event.preventDefault();
+	      this.props.search(this.refs.loqalSearch.value);
+	    }
+	  }, {
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Search'
+	        "form",
+	        { onSubmit: this._handleSearch.bind(this) },
+	        _react2.default.createElement("input", { type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
+	        _react2.default.createElement("input", { type: "submit", value: "Search" })
 	      );
 	    }
 	  }]);
