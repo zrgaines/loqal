@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class Map extends React.Component {
+class ListItem extends React.Component {
 
   constructor(props){
     super(props);
@@ -11,11 +11,13 @@ class Map extends React.Component {
   render(){
     return(
       <div>
-        Map
+        List Item One
+        List Item Two
+        List Item Three
       </div>
     );
   }
 }
 
 
-export default Map;
+export default ListItem;
