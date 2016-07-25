@@ -21155,12 +21155,26 @@
 	      });
 	    }
 	  }, {
+	    key: '_fetchCity',
+	    value: function _fetchCity(searchTerm) {
+	      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	        return response.json();
+	      }).then(function (results) {
+	        var lat = results.results[0].geometry.location.lat;
+	        console.log(lat);
+	        var lng = results.results[0].geometry.location.lng;
+	        console.log(lng);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_search2.default, null),
+	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_map2.default, null),
 	        _react2.default.createElement(_list2.default, null),
 	        _react2.default.createElement(
@@ -21181,7 +21195,7 @@
 /* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21211,12 +21225,19 @@
 	  }
 	
 	  _createClass(Search, [{
-	    key: 'render',
+	    key: "_handleSearch",
+	    value: function _handleSearch(event) {
+	      event.preventDefault();
+	      this.props.search(this.refs.loqalSearch.value);
+	    }
+	  }, {
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Search'
+	        "form",
+	        { onSubmit: this._handleSearch.bind(this) },
+	        _react2.default.createElement("input", { type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
+	        _react2.default.createElement("input", { type: "submit", value: "Search" })
 	      );
 	    }
 	  }]);
@@ -21230,7 +21251,7 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21260,13 +21281,9 @@
 	  }
 	
 	  _createClass(Map, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Map'
-	      );
+	      return _react2.default.createElement("div", { id: "map" });
 	    }
 	  }]);
 	
