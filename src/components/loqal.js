@@ -25,7 +25,7 @@ class Loqal extends React.Component {
 }
 
 var fetchCity = function(searchTerm) {
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?type=landmark&address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
       .then((response) => {
         return response.json()
       })
@@ -40,7 +40,7 @@ var fetchCity = function(searchTerm) {
 }
 
 var wikiJson = function(lat, long) {
-  fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=${lat}|${long}&format=json`)
+  fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=${lat}|${long}&format=json`)
       .then(function(response) {
         return response.json();
       }).then(function(json) {
@@ -73,7 +73,7 @@ var wikiPage = function(pageID) {
       .then(function(response) {
         return response.json();
       }).then(function(json) {
-          wikiImage(json.query.pages[pageID].images[0].title);
+          if(json.query.pages[pageID].images) { wikiImage(json.query.pages[pageID].images[0].title); }
       }).catch(function(ex) {
 >>>>>>> 3cb0f19e9f11e7c3c42483918ec90c238cdc9145
         console.log('parsing failed', ex)
