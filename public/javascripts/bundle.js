@@ -21164,6 +21164,18 @@
 	  return Loqal;
 	}(_react2.default.Component);
 	
+	var fetchCity = function fetchCity(searchTerm) {
+	  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	    return response.json();
+	  }).then(function (results) {
+	    var lat = results.results[0].geometry.location.lat;
+	    var lng = results.results[0].geometry.location.lng;
+	    wikiJson(lat, lng);
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
 	var wikiJson = function wikiJson(lat, long) {
 	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
 	    return response.json();
@@ -21178,23 +21190,21 @@
 	  });
 	};
 	
-	var fetchCity = function fetchCity(searchTerm) {
-	  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	var wikiPage = function wikiPage(pageID) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
 	    return response.json();
-	  }).then(function (results) {
-	    var lat = results.results[0].geometry.location.lat;
-	    var lng = results.results[0].geometry.location.lng;
-	    wikiJson(lat, lng);
+	  }).then(function (json) {
+	    wikiImage(json.query.pages[pageID].images[0].title);
 	  }).catch(function (ex) {
 	    console.log('parsing failed', ex);
 	  });
 	};
 	
-	var wikiPage = function wikiPage(pageID) {
-	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID).then(function (response) {
+	var wikiImage = function wikiImage(imageTitle) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&titles=' + imageTitle + '&prop=imageinfo&iiprop=url&format=json').then(function (response) {
 	    return response.json();
 	  }).then(function (json) {
-	    console.log(json);
+	    console.log(json.query.pages[-1].imageinfo[0].url);
 	  }).catch(function (ex) {
 	    console.log('parsing failed', ex);
 	  });

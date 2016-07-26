@@ -24,21 +24,6 @@ class Loqal extends React.Component {
   }
 }
 
-var wikiJson = function(lat, long) {
-  fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=${lat}|${long}&format=json`)
-      .then(function(response) {
-        return response.json();
-      }).then(function(json) {
-        var locationArray = json.query.geosearch;
-        locationArray.forEach(function(location) {
-          console.log(location);
-          wikiPage(location.pageid);
-        })
-      }).catch(function(ex) {
-        console.log('parsing failed', ex)
-      })
-}
-
 var fetchCity = function(searchTerm) {
   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
       .then((response) => {
@@ -54,12 +39,38 @@ var fetchCity = function(searchTerm) {
       })
 }
 
-var wikiPage = function(pageID) {
-    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}`)
+var wikiJson = function(lat, long) {
+  fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=${lat}|${long}&format=json`)
       .then(function(response) {
         return response.json();
       }).then(function(json) {
-          console.log(json);
+        var locationArray = json.query.geosearch;
+        locationArray.forEach(function(location) {
+          console.log(location);
+          wikiPage(location.pageid);
+        })
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
+}
+
+var wikiPage = function(pageID) {
+    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}&format=json`)
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+          wikiImage(json.query.pages[pageID].images[0].title);
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
+}
+
+var wikiImage = function(imageTitle) {
+    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&titles=${imageTitle}&prop=imageinfo&iiprop=url&format=json`)
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        console.log(json.query.pages[-1].imageinfo[0].url)
       }).catch(function(ex) {
         console.log('parsing failed', ex)
       })
