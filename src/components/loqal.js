@@ -24,6 +24,21 @@ class Loqal extends React.Component {
   }
 }
 
+var fetchCity = function(searchTerm) {
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((results) => {
+        let lat = results.results[0].geometry.location.lat;
+        let lng = results.results[0].geometry.location.lng;
+        wikiJson(lat, lng);
+      })
+      .catch((ex) => {
+        console.log('parsing failed', ex)
+      })
+}
+
 var wikiJson = function(lat, long) {
   fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=${lat}|${long}&format=json`)
       .then(function(response) {
@@ -39,6 +54,7 @@ var wikiJson = function(lat, long) {
       })
 }
 
+<<<<<<< HEAD
 var fetchCity = function(searchTerm) {
   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
       .then((response) => {
@@ -51,16 +67,25 @@ var fetchCity = function(searchTerm) {
         wikiJson(lat, lng);
       })
       .catch((ex) => {
+=======
+var wikiPage = function(pageID) {
+    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}&format=json`)
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+          wikiImage(json.query.pages[pageID].images[0].title);
+      }).catch(function(ex) {
+>>>>>>> 3cb0f19e9f11e7c3c42483918ec90c238cdc9145
         console.log('parsing failed', ex)
       })
 }
 
-var wikiPage = function(pageID) {
-    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}`)
+var wikiImage = function(imageTitle) {
+    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&titles=${imageTitle}&prop=imageinfo&iiprop=url&format=json`)
       .then(function(response) {
         return response.json();
       }).then(function(json) {
-          console.log(json);
+        console.log(json.query.pages[-1].imageinfo[0].url)
       }).catch(function(ex) {
         console.log('parsing failed', ex)
       })
