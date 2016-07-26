@@ -8,7 +8,6 @@ class Loqal extends React.Component {
   constructor(props){
     super(props);
   }
-
   _handleClick() {
     fetchJsonp('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=30.267153|-97.7430608&format=json')
       .then(function(response) {
@@ -19,7 +18,6 @@ class Loqal extends React.Component {
         console.log('parsing failed', ex)
       })
   }
-
   _fetchCity(searchTerm) {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
       .then((response) => {
