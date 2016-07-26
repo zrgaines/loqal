@@ -21165,7 +21165,7 @@
 	}(_react2.default.Component);
 	
 	var fetchCity = function fetchCity(searchTerm) {
-	  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	  fetch('https://maps.googleapis.com/maps/api/geocode/json?type=landmark&address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
 	    return response.json();
 	  }).then(function (results) {
 	    var lat = results.results[0].geometry.location.lat;
@@ -21177,7 +21177,7 @@
 	};
 	
 	var wikiJson = function wikiJson(lat, long) {
-	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
 	    return response.json();
 	  }).then(function (json) {
 	    var locationArray = json.query.geosearch;
@@ -21194,7 +21194,9 @@
 	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
 	    return response.json();
 	  }).then(function (json) {
-	    wikiImage(json.query.pages[pageID].images[0].title);
+	    if (json.query.pages[pageID].images) {
+	      wikiImage(json.query.pages[pageID].images[0].title);
+	    }
 	  }).catch(function (ex) {
 	    console.log('parsing failed', ex);
 	  });
