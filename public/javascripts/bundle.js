@@ -21144,19 +21144,9 @@
 	  }
 	
 	  _createClass(Loqal, [{
-	    key: '_handleClick',
-	    value: function _handleClick() {
-	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=30.267153|-97.7430608&format=json').then(function (response) {
-	        return response.json();
-	      }).then(function (json) {
-	        console.log('parsed json', json);
-	      }).catch(function (ex) {
-	        console.log('parsing failed', ex);
-	      });
-	    }
-	  }, {
 	    key: '_fetchCity',
 	    value: function _fetchCity(searchTerm) {
+<<<<<<< HEAD
 	      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
 	        return response.json();
 	      }).then(function (results) {
@@ -21168,6 +21158,9 @@
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
+=======
+	      fetchCity(searchTerm);
+>>>>>>> deabf03ba95cf6009d98da35373b93d208408956
 	    }
 	  }, {
 	    key: 'render',
@@ -21177,18 +21170,49 @@
 	        null,
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_map2.default, null),
-	        _react2.default.createElement(_list2.default, null),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this._handleClick.bind(this) },
-	          'button '
-	        )
+	        _react2.default.createElement(_list2.default, null)
 	      );
 	    }
 	  }]);
 	
 	  return Loqal;
 	}(_react2.default.Component);
+	
+	var wikiJson = function wikiJson(lat, long) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
+	    return response.json();
+	  }).then(function (json) {
+	    var locationArray = json.query.geosearch;
+	    locationArray.forEach(function (location) {
+	      console.log(location);
+	      wikiPage(location.pageid);
+	    });
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
+	var fetchCity = function fetchCity(searchTerm) {
+	  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	    return response.json();
+	  }).then(function (results) {
+	    var lat = results.results[0].geometry.location.lat;
+	    var lng = results.results[0].geometry.location.lng;
+	    wikiJson(lat, lng);
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
+	var wikiPage = function wikiPage(pageID) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID).then(function (response) {
+	    return response.json();
+	  }).then(function (json) {
+	    console.log(json);
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
 	
 	exports.default = Loqal;
 

@@ -9,32 +9,8 @@ class Loqal extends React.Component {
     super(props);
   }
 
-  _handleClick() {
-    fetchJsonp('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=30.267153|-97.7430608&format=json')
-      .then(function(response) {
-        return response.json()
-      }).then(function(json) {
-        console.log('parsed json', json)
-      }).catch(function(ex) {
-        console.log('parsing failed', ex)
-      })
-  }
-
   _fetchCity(searchTerm) {
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
-      .then((response) => {
-        return response.json()
-      })
-      .then((results) => {
-        console.log(results.results[0].geometry.location);
-        let lat = results.results[0].geometry.location.lat;
-        console.log(lat);
-        let lng = results.results[0].geometry.location.lng;
-        console.log(lng);
-      })
-      .catch((ex) => {
-        console.log('parsing failed', ex)
-      })
+    fetchCity(searchTerm);
   }
 
   render(){
@@ -43,10 +19,51 @@ class Loqal extends React.Component {
         <Search search={ this._fetchCity.bind(this) }/>
         <Map />
         <List />
-        <button onClick={this._handleClick.bind(this)}>button </button>
       </div>
     );
   }
+}
+
+var wikiJson = function(lat, long) {
+  fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=${lat}|${long}&format=json`)
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        var locationArray = json.query.geosearch;
+        locationArray.forEach(function(location) {
+          console.log(location);
+          wikiPage(location.pageid);
+        })
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
+}
+
+var fetchCity = function(searchTerm) {
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((results) => {
+        console.log(results.results[0].geometry.location);
+        let lat = results.results[0].geometry.location.lat;
+        let lng = results.results[0].geometry.location.lng;
+        wikiJson(lat, lng);
+      })
+      .catch((ex) => {
+        console.log('parsing failed', ex)
+      })
+}
+
+var wikiPage = function(pageID) {
+    fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}`)
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+          console.log(json);
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
 }
 
 export default Loqal;
