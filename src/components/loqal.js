@@ -53,20 +53,6 @@ var wikiJson = function(lat, long) {
       })
 }
 
-<<<<<<< HEAD
-var fetchCity = function(searchTerm) {
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
-      .then((response) => {
-        return response.json()
-      })
-      .then((results) => {
-        console.log(results.results[0].geometry.location);
-        let lat = results.results[0].geometry.location.lat;
-        let lng = results.results[0].geometry.location.lng;
-        wikiJson(lat, lng);
-      })
-      .catch((ex) => {
-=======
 var wikiPage = function(pageID) {
     fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}&format=json`)
       .then(function(response) {
@@ -74,7 +60,6 @@ var wikiPage = function(pageID) {
       }).then(function(json) {
           if(json.query.pages[pageID].images) { wikiImage(json.query.pages[pageID].images[0].title); }
       }).catch(function(ex) {
->>>>>>> 3cb0f19e9f11e7c3c42483918ec90c238cdc9145
         console.log('parsing failed', ex)
       })
 }
