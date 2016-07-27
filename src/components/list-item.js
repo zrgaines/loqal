@@ -11,9 +11,16 @@ class ListItem extends React.Component {
   render(){
     return(
       <div>
-        List Item One
-        List Item Two
-        List Item Three
+        <p>{ this.props.landmark[0] }</p>
+        <p>{ this.props.landmark[1] }</p>
+        <p>{ this.props.landmark[2] }</p>
+        <p>{ this.props.landmark[3] }</p>
+        <p>{ this.props.landmark[4] }</p>
+        <p>{ this.props.landmark[5] }</p>
+        <p>{ this.props.landmark[6] }</p>
+        <p>{ this.props.landmark[7] }</p>
+        <p>{ this.props.landmark[8] }</p>
+        <p>{ this.props.landmark[9] }</p>
       </div>
     );
   }

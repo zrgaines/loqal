@@ -6,14 +6,12 @@ class List extends React.Component {
 
   constructor(props){
     super(props);
-
   }
 
   render(){
     return(
       <div>
-        THE LIST
-        <ListItem />
+        <h3> Saved Landmarks </h3>
       </div>
     );
   }
