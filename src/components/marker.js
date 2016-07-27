@@ -1,18 +1,19 @@
 import React from 'react';
 
 
-class Map extends React.Component {
+class Marker extends React.Component {
+
   constructor(props){
     super(props);
   }
   render(){
     return(
-      <div id="map">
-
+      <div>
+         {this.props.text}
       </div>
     );
   }
 }
 
 
-export default Map;
+export default Marker;
