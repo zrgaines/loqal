@@ -21382,7 +21382,6 @@
 	          {
 	            zoom: 16,
 	            defaultZoom: 4,
-	            key: AIzaSyAWHNtqn_uj78l92XOMkLgSI7AODat6Ums,
 	            center: { lat: this.props.searchLat, lng: this.props.searchLng } },
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0], text: 'A' }),
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1], text: 'B' }),

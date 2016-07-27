@@ -13,7 +13,6 @@ class DestinationMap extends React.Component {
             <GoogleMap
               zoom={16}
               defaultZoom={4}
-              key={AIzaSyAWHNtqn_uj78l92XOMkLgSI7AODat6Ums}
               center={{lat: this.props.searchLat, lng: this.props.searchLng}}>
               <Marker className="marker" lat={this.props.landmarks.lat[0]} lng={this.props.landmarks.lng[0]} text={'A'}>
               </Marker>
