@@ -3,17 +3,42 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 50%;
   margin: 0;
+  background-image: url("https://cdn3.f-cdn.com/contestentries/362065/18471655/56d4fa32d1d02_thumb900.jpg");
 }
 
 a {
   color: #00B7FF;
 }
+
+html, body {
+  height: 100%;
+
+}
 #map {
-  height: 300px;
+  height: 400px;
+  /*width:900px;*/
+  width: 80%;
+  margin:0 auto;
+  border:10px solid #20B2AA;
+  border-radius: 10px;
 }
 
 .marker {
 background-color: white;
 height: 20px;
 width: 20px;
+}
+
+.searchloqal{
+  margin-left:530px;
+}
+/*.searchsubmit{
+  margin-left:5px;
+}*/
+
+h1{
+  font-family: 'Orbitron', sans-serif;
+  font-size:50px;
+  color:white;
+  text-align: center;
 }

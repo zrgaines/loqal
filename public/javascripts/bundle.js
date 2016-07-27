@@ -60,7 +60,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(_react2.default.createElement(_loqal2.default, null), document.getElementById('container'));
+	_reactDom2.default.render(_react2.default.createElement(_loqal2.default, null), document.getElementById('container-loqal'));
 
 /***/ },
 /* 1 */
@@ -21259,8 +21259,8 @@
 	      return _react2.default.createElement(
 	        "form",
 	        { onSubmit: this._handleSearch.bind(this) },
-	        _react2.default.createElement("input", { type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
-	        _react2.default.createElement("input", { type: "submit", value: "Search" })
+	        _react2.default.createElement("input", { className: "searchloqal", type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
+	        _react2.default.createElement("input", { className: "searchsubmit", type: "submit", value: "Search" })
 	      );
 	    }
 	  }]);
