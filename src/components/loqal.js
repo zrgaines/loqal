@@ -70,7 +70,9 @@ wikiPage(pageID) {
       .then((response) => {
         return response.json();
       }).then((json) => {
+        this.wikiSummary(json.query.pages[pageID])
         this.wikiImage(json.query.pages[pageID].images[0].title); 
+
       }).catch(function(ex) {
         console.log('parsing failed', ex)
       })
@@ -85,6 +87,17 @@ wikiImage(imageTitle) {
         var arrayImg= [];
         arrayImg.push(json.query.pages[-1].imageinfo[0].url)
         this.setState({img: arrayImg})
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
+}
+
+wikiSummary(pageID) {
+  fetchJsonp(`http://en.wikipedia.org/w/api.php?action=query&page=${pageID}&prop=text&section=0&format=json`)
+      .then((response) => {
+        return response.json();
+      }).then((json) => {
+        console.log(json)
       }).catch(function(ex) {
         console.log('parsing failed', ex)
       })

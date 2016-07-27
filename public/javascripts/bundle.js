@@ -21211,6 +21211,7 @@
 	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
 	        return response.json();
 	      }).then(function (json) {
+	        _this4.wikiSummary(json.query.pages[pageID]);
 	        _this4.wikiImage(json.query.pages[pageID].images[0].title);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
@@ -21228,6 +21229,17 @@
 	        var arrayImg = [];
 	        arrayImg.push(json.query.pages[-1].imageinfo[0].url);
 	        _this5.setState({ img: arrayImg });
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
+	    key: 'wikiSummary',
+	    value: function wikiSummary(pageID) {
+	      (0, _fetchJsonp2.default)('http://en.wikipedia.org/w/api.php?action=query&page=' + pageID + '&prop=text&section=0&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        console.log(json);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
@@ -21362,16 +21374,16 @@
 	  _createClass(DestinationMap, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.landmarks);
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'map' },
 	        _react2.default.createElement(
 	          _googleMapReact2.default,
 	          {
-	            defaultCenter: { lat: 36.964, lng: -95.015 },
+	            zoom: 16,
 	            defaultZoom: 4,
-	            center: { lat: this.props.searchLat, lng: this.props.searchLng }, zoom: 16 },
+	            key: AIzaSyAWHNtqn_uj78l92XOMkLgSI7AODat6Ums,
+	            center: { lat: this.props.searchLat, lng: this.props.searchLng } },
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0], text: 'A' }),
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1], text: 'B' }),
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[2], lng: this.props.landmarks.lng[2], text: 'C' }),
@@ -24172,7 +24184,7 @@
 	      return _react2.default.createElement(
 	        "div",
 	        null,
-	        _react2.default.createElement("i", { className: "fa fa-map-marker", "aria-hidden": "true" })
+	        _react2.default.createElement("i", { className: "fa fa-map-marker fa-2x", "aria-hidden": "true" })
 	      );
 	    }
 	  }]);

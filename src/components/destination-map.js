@@ -4,15 +4,17 @@ import Marker from './marker';
 
 
 class DestinationMap extends React.Component {
+
+  
   render(){
-    console.log(this.props.landmarks)
     return(
       
       <div id="map">
             <GoogleMap
-              defaultCenter={{lat: 36.964, lng: -95.015}}
+              zoom={16}
               defaultZoom={4}
-              center={{lat: this.props.searchLat, lng: this.props.searchLng}} zoom={16}>
+              key={AIzaSyAWHNtqn_uj78l92XOMkLgSI7AODat6Ums}
+              center={{lat: this.props.searchLat, lng: this.props.searchLng}}>
               <Marker className="marker" lat={this.props.landmarks.lat[0]} lng={this.props.landmarks.lng[0]} text={'A'}>
               </Marker>
               <Marker className="marker" lat={this.props.landmarks.lat[1]} lng={this.props.landmarks.lng[1]} text={'B'}>
