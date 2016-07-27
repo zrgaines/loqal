@@ -4,4 +4,3 @@ import Loqal from './components/loqal';
 
 ReactDOM.render(<Loqal />, document.getElementById('container-loqal'));
 
-

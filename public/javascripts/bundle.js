@@ -21122,6 +21122,10 @@
 	
 	var _list2 = _interopRequireDefault(_list);
 	
+	var _listItem = __webpack_require__(200);
+	
+	var _listItem2 = _interopRequireDefault(_listItem);
+	
 	var _fetchJsonp = __webpack_require__(201);
 	
 	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
@@ -21251,8 +21255,9 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
+	        _react2.default.createElement(_destinationMap2.default, { searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
 	        _react2.default.createElement(_list2.default, null),
-	        _react2.default.createElement(_destinationMap2.default, { searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state })
+	        _react2.default.createElement(_listItem2.default, { landmark: this.state.title })
 	      );
 	    }
 	  }]);
@@ -21319,8 +21324,8 @@
 	      return _react2.default.createElement(
 	        "form",
 	        { onSubmit: this._handleSearch.bind(this) },
-	        _react2.default.createElement("input", { className: "searchloqal", type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
-	        _react2.default.createElement("input", { className: "searchsubmit", type: "submit", value: "Search" })
+	        _react2.default.createElement("input", { type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
+	        _react2.default.createElement("input", { type: "submit", value: "Search" })
 	      );
 	    }
 	  }]);
@@ -21382,7 +21387,6 @@
 	          {
 	            zoom: 16,
 	            defaultZoom: 4,
-	            key: AIzaSyAWHNtqn_uj78l92XOMkLgSI7AODat6Ums,
 	            center: { lat: this.props.searchLat, lng: this.props.searchLng } },
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0], text: 'A' }),
 	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1], text: 'B' }),
@@ -24308,8 +24312,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'THE LIST',
-	        _react2.default.createElement(_listItem2.default, null)
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          ' Saved Landmarks '
+	        )
 	      );
 	    }
 	  }]);
@@ -24358,7 +24365,56 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'List Item One List Item Two List Item Three'
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[0]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[1]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[2]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[3]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[4]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[5]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[6]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[7]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[8]
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.landmark[9]
+	        )
 	      );
 	    }
 	  }]);
