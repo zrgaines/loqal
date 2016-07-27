@@ -21094,6 +21094,512 @@
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
+<<<<<<< HEAD
+=======
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _search = __webpack_require__(173);
+	
+	var _search2 = _interopRequireDefault(_search);
+	
+	var _destinationMap = __webpack_require__(179);
+	
+	var _destinationMap2 = _interopRequireDefault(_destinationMap);
+	
+	var _list = __webpack_require__(175);
+	
+	var _list2 = _interopRequireDefault(_list);
+	
+	var _fetchJsonp = __webpack_require__(178);
+	
+	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Loqal = function (_React$Component) {
+	  _inherits(Loqal, _React$Component);
+	
+	  function Loqal(props) {
+	    _classCallCheck(this, Loqal);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Loqal).call(this, props));
+	  }
+	
+	  _createClass(Loqal, [{
+	    key: '_fetchCity',
+	    value: function _fetchCity(searchTerm) {
+	      fetchCity(searchTerm);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
+	        _react2.default.createElement(_list2.default, null),
+	        _react2.default.createElement(_destinationMap2.default, null)
+	      );
+	    }
+	  }]);
+	
+	  return Loqal;
+	}(_react2.default.Component);
+	
+	var fetchCity = function fetchCity(searchTerm) {
+	  fetch('https://maps.googleapis.com/maps/api/geocode/json?type=landmark&address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	    return response.json();
+	  }).then(function (results) {
+	    var lat = results.results[0].geometry.location.lat;
+	    var lng = results.results[0].geometry.location.lng;
+	    wikiJson(lat, lng);
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
+	var wikiJson = function wikiJson(lat, long) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
+	    return response.json();
+	  }).then(function (json) {
+	    var locationArray = json.query.geosearch;
+	    locationArray.forEach(function (location) {
+	      console.log(location);
+	      wikiPage(location.pageid);
+	    });
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
+	var wikiPage = function wikiPage(pageID) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
+	    return response.json();
+	  }).then(function (json) {
+	    if (json.query.pages[pageID].images) {
+	      wikiImage(json.query.pages[pageID].images[0].title);
+	    }
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
+	var wikiImage = function wikiImage(imageTitle) {
+	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&titles=' + imageTitle + '&prop=imageinfo&iiprop=url&format=json').then(function (response) {
+	    return response.json();
+	  }).then(function (json) {
+	    console.log(json.query.pages[-1].imageinfo[0].url);
+	  }).catch(function (ex) {
+	    console.log('parsing failed', ex);
+	  });
+	};
+	
+	exports.default = Loqal;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Search = function (_React$Component) {
+	  _inherits(Search, _React$Component);
+	
+	  function Search(props) {
+	    _classCallCheck(this, Search);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Search).call(this, props));
+	  }
+	
+	  _createClass(Search, [{
+	    key: "_handleSearch",
+	    value: function _handleSearch(event) {
+	      event.preventDefault();
+	      this.props.search(this.refs.loqalSearch.value);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "form",
+	        { onSubmit: this._handleSearch.bind(this) },
+	        _react2.default.createElement("input", { type: "search", ref: "loqalSearch", placeholder: "Search for a city" }),
+	        _react2.default.createElement("input", { type: "submit", value: "Search" })
+	      );
+	    }
+	  }]);
+	
+	  return Search;
+	}(_react2.default.Component);
+	
+	exports.default = Search;
+
+/***/ },
+/* 174 */,
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _listItem = __webpack_require__(176);
+	
+	var _listItem2 = _interopRequireDefault(_listItem);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var List = function (_React$Component) {
+	  _inherits(List, _React$Component);
+	
+	  function List(props) {
+	    _classCallCheck(this, List);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(List).call(this, props));
+	  }
+	
+	  _createClass(List, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'THE LIST',
+	        _react2.default.createElement(_listItem2.default, null)
+	      );
+	    }
+	  }]);
+	
+	  return List;
+	}(_react2.default.Component);
+	
+	exports.default = List;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ListItem = function (_React$Component) {
+	  _inherits(ListItem, _React$Component);
+	
+	  function ListItem(props) {
+	    _classCallCheck(this, ListItem);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ListItem).call(this, props));
+	  }
+	
+	  _createClass(ListItem, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'List Item One List Item Two List Item Three'
+	      );
+	    }
+	  }]);
+	
+	  return ListItem;
+	}(_react2.default.Component);
+	
+	exports.default = ListItem;
+
+/***/ },
+/* 177 */,
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, module], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+	    factory(exports, module);
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, mod);
+	    global.fetchJsonp = mod.exports;
+	  }
+	})(this, function (exports, module) {
+	  'use strict';
+	
+	  var defaultOptions = {
+	    timeout: 5000,
+	    jsonpCallback: 'callback',
+	    jsonpCallbackFunction: null
+	  };
+	
+	  function generateCallbackFunction() {
+	    return 'jsonp_' + Date.now() + '_' + Math.ceil(Math.random() * 100000);
+	  }
+	
+	  // Known issue: Will throw 'Uncaught ReferenceError: callback_*** is not defined' error if request timeout
+	  function clearFunction(functionName) {
+	    // IE8 throws an exception when you try to delete a property on window
+	    // http://stackoverflow.com/a/1824228/751089
+	    try {
+	      delete window[functionName];
+	    } catch (e) {
+	      window[functionName] = undefined;
+	    }
+	  }
+	
+	  function removeScript(scriptId) {
+	    var script = document.getElementById(scriptId);
+	    document.getElementsByTagName('head')[0].removeChild(script);
+	  }
+	
+	  var fetchJsonp = function fetchJsonp(url) {
+	    var options = arguments[1] === undefined ? {} : arguments[1];
+	
+	    var timeout = options.timeout != null ? options.timeout : defaultOptions.timeout;
+	    var jsonpCallback = options.jsonpCallback != null ? options.jsonpCallback : defaultOptions.jsonpCallback;
+	
+	    var timeoutId = undefined;
+	
+	    return new Promise(function (resolve, reject) {
+	      var callbackFunction = options.jsonpCallbackFunction || generateCallbackFunction();
+	
+	      window[callbackFunction] = function (response) {
+	        resolve({
+	          ok: true,
+	          // keep consistent with fetch API
+	          json: function json() {
+	            return Promise.resolve(response);
+	          }
+	        });
+	
+	        if (timeoutId) clearTimeout(timeoutId);
+	
+	        removeScript(jsonpCallback + '_' + callbackFunction);
+	
+	        clearFunction(callbackFunction);
+	      };
+	
+	      // Check if the user set their own params, and if not add a ? to start a list of params
+	      url += url.indexOf('?') === -1 ? '?' : '&';
+	
+	      var jsonpScript = document.createElement('script');
+	      jsonpScript.setAttribute('src', url + jsonpCallback + '=' + callbackFunction);
+	      jsonpScript.id = jsonpCallback + '_' + callbackFunction;
+	      document.getElementsByTagName('head')[0].appendChild(jsonpScript);
+	
+	      timeoutId = setTimeout(function () {
+	        reject(new Error('JSONP request to ' + url + ' timed out'));
+	
+	        clearFunction(callbackFunction);
+	        removeScript(jsonpCallback + '_' + callbackFunction);
+	      }, timeout);
+	    });
+	  };
+	
+	  // export as global function
+	  /*
+	  let local;
+	  if (typeof global !== 'undefined') {
+	    local = global;
+	  } else if (typeof self !== 'undefined') {
+	    local = self;
+	  } else {
+	    try {
+	      local = Function('return this')();
+	    } catch (e) {
+	      throw new Error('polyfill failed because global object is unavailable in this environment');
+	    }
+	  }
+	  
+	  local.fetchJsonp = fetchJsonp;
+	  */
+	
+	  module.exports = fetchJsonp;
+	});
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _googleMapReact = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"google-map-react\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
+	
+	var _marker = __webpack_require__(180);
+	
+	var _marker2 = _interopRequireDefault(_marker);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DestinationMap = function (_React$Component) {
+	  _inherits(DestinationMap, _React$Component);
+	
+	  function DestinationMap() {
+	    _classCallCheck(this, DestinationMap);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(DestinationMap).apply(this, arguments));
+	  }
+	
+	  _createClass(DestinationMap, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'map' },
+	        _react2.default.createElement(
+	          _googleMapReact2.default,
+	          {
+	            defaultCenter: { lat: 36.964, lng: -122.015 },
+	            defaultZoom: 8 },
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: 36.964, lng: -122.015, text: 'A' })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return DestinationMap;
+	}(_react2.default.Component);
+	
+	exports.default = DestinationMap;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Marker = function (_React$Component) {
+	  _inherits(Marker, _React$Component);
+	
+	  function Marker(props) {
+	    _classCallCheck(this, Marker);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Marker).call(this, props));
+	  }
+	
+	  _createClass(Marker, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.text
+	      );
+	    }
+	  }]);
+	
+	  return Marker;
+	}(_react2.default.Component);
+	
+	exports.default = Marker;
+
+>>>>>>> 20b97a1e84cc2d5271b0384de24bb3b6f642bf8c
 /***/ }
 /******/ ]);
 //# sourceMappingURL=bundle.js.map

@@ -1,6 +1,6 @@
 import React from 'react';
 import Search from './search';
-import Map from './map';
+import DestinationMap from './destination-map';
 import List from './list';
 import fetchJsonp from 'fetch-jsonp';
 
@@ -8,7 +8,6 @@ class Loqal extends React.Component {
   constructor(props){
     super(props);
   }
-
   _fetchCity(searchTerm) {
     fetchCity(searchTerm);
   }
@@ -17,8 +16,8 @@ class Loqal extends React.Component {
     return(
       <div>
         <Search search={ this._fetchCity.bind(this) }/>
-        <Map />
         <List />
+        <DestinationMap />
       </div>
     );
   }
