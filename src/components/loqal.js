@@ -2,6 +2,7 @@ import React from 'react';
 import Search from './search';
 import DestinationMap from './destination-map';
 import List from './list';
+import ListItem from './list-item';
 import fetchJsonp from 'fetch-jsonp';
 
 class Loqal extends React.Component {
@@ -51,7 +52,7 @@ class Loqal extends React.Component {
           arrayLat.push(location.lat)
           arrayLng.push(location.lon)
           arrayTitle.push(location.title)
-          
+
           this.setState({
           lat: arrayLat,
           lng: arrayLng,
@@ -70,7 +71,7 @@ wikiPage(pageID) {
       .then((response) => {
         return response.json();
       }).then((json) => {
-        this.wikiImage(json.query.pages[pageID].images[0].title); 
+        this.wikiImage(json.query.pages[pageID].images[0].title);
       }).catch(function(ex) {
         console.log('parsing failed', ex)
       })
@@ -94,8 +95,9 @@ wikiImage(imageTitle) {
     return(
       <div>
         <Search search={ this._fetchCity.bind(this) }/>
-        <List />
         <DestinationMap searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
+        <List />
+        <ListItem landmark={ this.state.title }/>
       </div>
     );
   }
