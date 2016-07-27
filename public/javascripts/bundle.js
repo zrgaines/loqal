@@ -21140,13 +21140,91 @@
 	  function Loqal(props) {
 	    _classCallCheck(this, Loqal);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Loqal).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Loqal).call(this, props));
+	
+	    _this.state = {
+	      lat: [],
+	      lng: [],
+	      title: []
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Loqal, [{
 	    key: '_fetchCity',
 	    value: function _fetchCity(searchTerm) {
-	      fetchCity(searchTerm);
+	      var _this2 = this;
+	
+	      fetch('https://maps.googleapis.com/maps/api/geocode/json?type=landmark&address=' + searchTerm + '&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE').then(function (response) {
+	        return response.json();
+	      }).then(function (results) {
+	        var lat = results.results[0].geometry.location.lat;
+	        var lng = results.results[0].geometry.location.lng;
+	        _this2.wikiJson(lat, lng);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
+	    key: 'wikiJson',
+	    value: function wikiJson(lat, long) {
+	      var _this3 = this;
+	
+	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        var locationArray = json.query.geosearch;
+	        locationArray.forEach(function (location) {
+	
+	          var arrayLat = this.state.lat;
+	          var arrayLng = this.state.lng;
+	          var arrayTitle = this.state.title;
+	
+	          var lat = location.lat;
+	          var lon = location.lon;
+	          var title = location.title;
+	
+	          arrayLat.push(lat);
+	          arrayLng.push(lon);
+	          arrayTitle.push(title);
+	
+	          this.setState({
+	            lat: arrayLat,
+	            lng: arrayLng,
+	            title: arrayTitle
+	          });
+	          this.wikiPage(location.pageid);
+	        }.bind(_this3));
+	        console.log(_this3.state);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
+	    key: 'wikiPage',
+	    value: function wikiPage(pageID) {
+	      var _this4 = this;
+	
+	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        if (json.query.pages[pageID].images) {
+	          _this4.wikiImage(json.query.pages[pageID].images[0].title);
+	        }
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
+	    key: 'wikiImage',
+	    value: function wikiImage(imageTitle) {
+	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&titles=' + imageTitle + '&prop=imageinfo&iiprop=url&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        console.log(json.query.pages[-1].imageinfo[0].url);
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -21176,41 +21254,44 @@
 	  });
 	};
 	
-	var wikiJson = function wikiJson(lat, long) {
-	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=' + lat + '|' + long + '&format=json').then(function (response) {
-	    return response.json();
-	  }).then(function (json) {
-	    var locationArray = json.query.geosearch;
-	    locationArray.forEach(function (location) {
-	      console.log(location);
-	      wikiPage(location.pageid);
-	    });
-	  }).catch(function (ex) {
-	    console.log('parsing failed', ex);
-	  });
-	};
+	// var wikiJson = function(lat, long) {
+	//   fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=${lat}|${long}&format=json`)
+	//       .then(function(response) {
+	//         return response.json();
+	//       }).then(function(json) {
+	//         var locationArray = json.query.geosearch;
+	//         locationArray.forEach(function(location) {
 	
-	var wikiPage = function wikiPage(pageID) {
-	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
-	    return response.json();
-	  }).then(function (json) {
-	    if (json.query.pages[pageID].images) {
-	      wikiImage(json.query.pages[pageID].images[0].title);
-	    }
-	  }).catch(function (ex) {
-	    console.log('parsing failed', ex);
-	  });
-	};
+	//           this.state.lat.push(location.lat);
+	//           console.log(this.state.lat)
+	//           wikiPage(location.pageid);
+	//         })
+	//       }).catch(function(ex) {
+	//         console.log('parsing failed', ex)
+	//       })
+	// }
 	
-	var wikiImage = function wikiImage(imageTitle) {
-	  (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&titles=' + imageTitle + '&prop=imageinfo&iiprop=url&format=json').then(function (response) {
-	    return response.json();
-	  }).then(function (json) {
-	    console.log(json.query.pages[-1].imageinfo[0].url);
-	  }).catch(function (ex) {
-	    console.log('parsing failed', ex);
-	  });
-	};
+	// var wikiPage = function(pageID) {
+	//     fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}&format=json`)
+	//       .then(function(response) {
+	//         return response.json();
+	//       }).then(function(json) {
+	//           if(json.query.pages[pageID].images) { wikiImage(json.query.pages[pageID].images[0].title); }
+	//       }).catch(function(ex) {
+	//         console.log('parsing failed', ex)
+	//       })
+	// }
+	
+	// var wikiImage = function(imageTitle) {
+	//     fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&titles=${imageTitle}&prop=imageinfo&iiprop=url&format=json`)
+	//       .then(function(response) {
+	//         return response.json();
+	//       }).then(function(json) {
+	//         console.log(json.query.pages[-1].imageinfo[0].url)
+	//       }).catch(function(ex) {
+	//         console.log('parsing failed', ex)
+	//       })
+	// }
 	
 	exports.default = Loqal;
 
