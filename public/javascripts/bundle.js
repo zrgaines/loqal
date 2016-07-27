@@ -21145,7 +21145,10 @@
 	    _this.state = {
 	      lat: [],
 	      lng: [],
-	      title: []
+	      title: [],
+	      img: [],
+	      searchLat: 36.964,
+	      searchLng: -95.015
 	    };
 	    return _this;
 	  }
@@ -21160,6 +21163,11 @@
 	      }).then(function (results) {
 	        var lat = results.results[0].geometry.location.lat;
 	        var lng = results.results[0].geometry.location.lng;
+	
+	        _this2.setState({
+	          searchLat: lat,
+	          searchLng: lng
+	        });
 	        _this2.wikiJson(lat, lng);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
@@ -21174,28 +21182,23 @@
 	        return response.json();
 	      }).then(function (json) {
 	        var locationArray = json.query.geosearch;
+	        var arrayLat = [];
+	        var arrayLng = [];
+	        var arrayTitle = [];
 	        locationArray.forEach(function (location) {
 	
-	          var arrayLat = this.state.lat;
-	          var arrayLng = this.state.lng;
-	          var arrayTitle = this.state.title;
-	
-	          var lat = location.lat;
-	          var lon = location.lon;
-	          var title = location.title;
-	
-	          arrayLat.push(lat);
-	          arrayLng.push(lon);
-	          arrayTitle.push(title);
+	          arrayLat.push(location.lat);
+	          arrayLng.push(location.lon);
+	          arrayTitle.push(location.title);
 	
 	          this.setState({
 	            lat: arrayLat,
 	            lng: arrayLng,
 	            title: arrayTitle
 	          });
+	
 	          this.wikiPage(location.pageid);
 	        }.bind(_this3));
-	        console.log(_this3.state);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
@@ -21208,9 +21211,8 @@
 	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=' + pageID + '&format=json').then(function (response) {
 	        return response.json();
 	      }).then(function (json) {
-	        if (json.query.pages[pageID].images) {
-	          _this4.wikiImage(json.query.pages[pageID].images[0].title);
-	        }
+	        _this4.wikiSummary(json.query.pages[pageID]);
+	        _this4.wikiImage(json.query.pages[pageID].images[0].title);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
@@ -21218,10 +21220,26 @@
 	  }, {
 	    key: 'wikiImage',
 	    value: function wikiImage(imageTitle) {
+	      var _this5 = this;
+	
 	      (0, _fetchJsonp2.default)('https://en.wikipedia.org/w/api.php?action=query&titles=' + imageTitle + '&prop=imageinfo&iiprop=url&format=json').then(function (response) {
 	        return response.json();
 	      }).then(function (json) {
-	        console.log(json.query.pages[-1].imageinfo[0].url);
+	
+	        var arrayImg = [];
+	        arrayImg.push(json.query.pages[-1].imageinfo[0].url);
+	        _this5.setState({ img: arrayImg });
+	      }).catch(function (ex) {
+	        console.log('parsing failed', ex);
+	      });
+	    }
+	  }, {
+	    key: 'wikiSummary',
+	    value: function wikiSummary(pageID) {
+	      (0, _fetchJsonp2.default)('http://en.wikipedia.org/w/api.php?action=query&page=' + pageID + '&prop=text&section=0&format=json').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
+	        console.log(json);
 	      }).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
@@ -21234,7 +21252,7 @@
 	        null,
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_list2.default, null),
-	        _react2.default.createElement(_destinationMap2.default, null)
+	        _react2.default.createElement(_destinationMap2.default, { searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state })
 	      );
 	    }
 	  }]);
@@ -21253,45 +21271,6 @@
 	    console.log('parsing failed', ex);
 	  });
 	};
-	
-	// var wikiJson = function(lat, long) {
-	//   fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&list=geosearch&type=river&gsradius=10000&gscoord=${lat}|${long}&format=json`)
-	//       .then(function(response) {
-	//         return response.json();
-	//       }).then(function(json) {
-	//         var locationArray = json.query.geosearch;
-	//         locationArray.forEach(function(location) {
-	
-	//           this.state.lat.push(location.lat);
-	//           console.log(this.state.lat)
-	//           wikiPage(location.pageid);
-	//         })
-	//       }).catch(function(ex) {
-	//         console.log('parsing failed', ex)
-	//       })
-	// }
-	
-	// var wikiPage = function(pageID) {
-	//     fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}&format=json`)
-	//       .then(function(response) {
-	//         return response.json();
-	//       }).then(function(json) {
-	//           if(json.query.pages[pageID].images) { wikiImage(json.query.pages[pageID].images[0].title); }
-	//       }).catch(function(ex) {
-	//         console.log('parsing failed', ex)
-	//       })
-	// }
-	
-	// var wikiImage = function(imageTitle) {
-	//     fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&titles=${imageTitle}&prop=imageinfo&iiprop=url&format=json`)
-	//       .then(function(response) {
-	//         return response.json();
-	//       }).then(function(json) {
-	//         console.log(json.query.pages[-1].imageinfo[0].url)
-	//       }).catch(function(ex) {
-	//         console.log('parsing failed', ex)
-	//       })
-	// }
 	
 	exports.default = Loqal;
 
@@ -21401,9 +21380,20 @@
 	        _react2.default.createElement(
 	          _googleMapReact2.default,
 	          {
-	            defaultCenter: { lat: 36.964, lng: -122.015 },
-	            defaultZoom: 8 },
-	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: 36.964, lng: -122.015, text: 'A' })
+	            zoom: 16,
+	            defaultZoom: 4,
+	            key: AIzaSyAWHNtqn_uj78l92XOMkLgSI7AODat6Ums,
+	            center: { lat: this.props.searchLat, lng: this.props.searchLng } },
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0], text: 'A' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1], text: 'B' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[2], lng: this.props.landmarks.lng[2], text: 'C' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[3], lng: this.props.landmarks.lng[3], text: 'D' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[4], lng: this.props.landmarks.lng[4], text: 'E' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[5], lng: this.props.landmarks.lng[5], text: 'F' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[6], lng: this.props.landmarks.lng[6], text: 'G' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[7], lng: this.props.landmarks.lng[7], text: 'H' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[8], lng: this.props.landmarks.lng[8], text: 'I' }),
+	          _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[9], lng: this.props.landmarks.lng[9], text: 'J' })
 	        )
 	      );
 	    }
@@ -24230,7 +24220,7 @@
 /* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -24260,12 +24250,12 @@
 	  }
 	
 	  _createClass(Marker, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
+	        "div",
 	        null,
-	        this.props.text
+	        _react2.default.createElement("i", { className: "fa fa-map-marker fa-2x", "aria-hidden": "true" })
 	      );
 	    }
 	  }]);
