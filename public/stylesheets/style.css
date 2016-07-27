@@ -1,6 +1,8 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 50%;
+  margin: 0;
 }
 
 a {
@@ -14,3 +16,10 @@ html, body {
 #map {
   height: 400px;
 }
+
+.marker {
+background-color: white;
+height: 20px;
+width: 20px;
+}
+
