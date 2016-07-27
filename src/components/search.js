@@ -13,10 +13,10 @@ class Search extends React.Component {
   }
   render(){
     return(
-      <form onSubmit={this._handleSearch.bind(this)}>
-        <input type="search" ref="loqalSearch" placeholder="Search for a city"/>
-        <input type="submit" value="Search"/>
-      </form>
+          <form onSubmit={this._handleSearch.bind(this)}>
+            <input className="searchloqal" type="search" ref="loqalSearch" placeholder="Search for a city"/>
+            <input className="searchsubmit" type="submit" value="Search"/>
+          </form>
     );
   }
 }
