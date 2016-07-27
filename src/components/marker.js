@@ -9,7 +9,7 @@ class Marker extends React.Component {
   render(){
     return(
       <div>
-         {this.props.text}
+       <i className="fa fa-map-marker" aria-hidden="true"></i>
       </div>
     );
   }
