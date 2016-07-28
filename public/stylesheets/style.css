@@ -29,6 +29,7 @@ a {
 #header {
   height: 100px;
   background-color: #2B2D42;
+  display: flex;
 }
 #secondHeader {
   height: 10px;
@@ -42,7 +43,7 @@ a {
 #footer p{
   font-size:15px;
   padding-top: 20px;
-  margin:0;
+  margin: 0 !important;
 }
 .marker {
 background-color: white;
@@ -57,6 +58,7 @@ h1{
   font-size:56px;
   color:white;
   padding: 20px;
+  padding-left: 0;
   margin: 0 !important;
 }
 
@@ -115,7 +117,7 @@ input[type=submit]:active{
 h3, p {
   color: white;
   text-align: center;
-  margin:0 !important;
+  margin: 10px auto!important;
 }
 
 ul {
@@ -123,9 +125,9 @@ ul {
  }
 
 .landmarkBar {
-  height: 50px;
+  height: 80px;
   width: 80%;
-  margin:0 auto;
+  margin:10px auto;
   border-width:2px;
   border-style:solid;
   border-bottom-color:#BBC2E2;
@@ -135,4 +137,9 @@ ul {
   border-radius:2px;
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
+}
+
+#logo {
+  height: 80px;
+  margin-top: 10px;
 }
