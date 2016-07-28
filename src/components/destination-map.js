@@ -9,6 +9,7 @@ class DestinationMap extends React.Component {
       return(
         <div id="map">
             <GoogleMap
+              apiKey={process.env.GOOGLE_MAPS_KEY}
               zoom={16}
               defaultZoom={4}
               center={{lat: this.props.searchLat, lng: this.props.searchLng}}>

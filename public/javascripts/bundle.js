@@ -21345,7 +21345,7 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21392,6 +21392,7 @@
 	          _react2.default.createElement(
 	            _googleMapReact2.default,
 	            {
+	              apiKey: process.env.GOOGLE_MAPS_KEY,
 	              zoom: 16,
 	              defaultZoom: 4,
 	              center: { lat: this.props.searchLat, lng: this.props.searchLng } },
@@ -21424,6 +21425,7 @@
 	}(_react2.default.Component);
 	
 	exports.default = DestinationMap;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 /* 175 */
