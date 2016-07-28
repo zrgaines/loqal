@@ -13,9 +13,15 @@ class Loqal extends React.Component {
       lng: [],
       title: [],
       img: [],
+      displayListItems: [],
       searchLat: 36.964,
       searchLng: -95.015
     }
+  }
+  _addIndexToDisplayListItems(index){
+    var displayArray = this.state.displayListItems;
+    displayArray.push(index)
+    this.setState({displayListItems: displayArray});
   }
   _fetchCity(searchTerm) {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?type=landmark&address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
@@ -98,7 +104,6 @@ wikiSummary(pageID) {
       .then((response) => {
         return response.json();
       }).then((json) => {
-        console.log(json)
       }).catch(function(ex) {
         console.log('parsing failed', ex)
       })
@@ -108,9 +113,9 @@ wikiSummary(pageID) {
     return(
       <div>
         <Search search={ this._fetchCity.bind(this) }/>
-        <DestinationMap searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
+        <DestinationMap title={this.state.title} addindex={this._addIndexToDisplayListItems.bind(this)} searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
         <List />
-        <ListItem landmark={ this.state.title }/>
+        <ListItem display={this.state.displayListItems} landmark={ this.state.title }/>
       </div>
     );
   }

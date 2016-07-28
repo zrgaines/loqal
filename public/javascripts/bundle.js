@@ -21151,6 +21151,7 @@
 	      lng: [],
 	      title: [],
 	      img: [],
+	      displayListItems: [],
 	      searchLat: 36.964,
 	      searchLng: -95.015
 	    };
@@ -21158,6 +21159,13 @@
 	  }
 	
 	  _createClass(Loqal, [{
+	    key: '_addIndexToDisplayListItems',
+	    value: function _addIndexToDisplayListItems(index) {
+	      var displayArray = this.state.displayListItems;
+	      displayArray.push(index);
+	      this.setState({ displayListItems: displayArray });
+	    }
+	  }, {
 	    key: '_fetchCity',
 	    value: function _fetchCity(searchTerm) {
 	      var _this2 = this;
@@ -21242,9 +21250,7 @@
 	    value: function wikiSummary(pageID) {
 	      (0, _fetchJsonp2.default)('http://en.wikipedia.org/w/api.php?action=query&page=' + pageID + '&prop=text&section=0&format=json').then(function (response) {
 	        return response.json();
-	      }).then(function (json) {
-	        console.log(json);
-	      }).catch(function (ex) {
+	      }).then(function (json) {}).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
 	    }
@@ -21255,9 +21261,9 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
-	        _react2.default.createElement(_destinationMap2.default, { searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
+	        _react2.default.createElement(_destinationMap2.default, { title: this.state.title, addindex: this._addIndexToDisplayListItems.bind(this), searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
 	        _react2.default.createElement(_list2.default, null),
-	        _react2.default.createElement(_listItem2.default, { landmark: this.state.title })
+	        _react2.default.createElement(_listItem2.default, { display: this.state.displayListItems, landmark: this.state.title })
 	      );
 	    }
 	  }]);
@@ -21389,16 +21395,16 @@
 	              zoom: 16,
 	              defaultZoom: 4,
 	              center: { lat: this.props.searchLat, lng: this.props.searchLng } },
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0], text: 'A' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1], text: 'B' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[2], lng: this.props.landmarks.lng[2], text: 'C' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[3], lng: this.props.landmarks.lng[3], text: 'D' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[4], lng: this.props.landmarks.lng[4], text: 'E' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[5], lng: this.props.landmarks.lng[5], text: 'F' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[6], lng: this.props.landmarks.lng[6], text: 'G' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[7], lng: this.props.landmarks.lng[7], text: 'H' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[8], lng: this.props.landmarks.lng[8], text: 'I' }),
-	            _react2.default.createElement(_marker2.default, { className: 'marker', lat: this.props.landmarks.lat[9], lng: this.props.landmarks.lng[9], text: 'J' })
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[0], id: 0, lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[1], id: 1, lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[2], id: 2, lat: this.props.landmarks.lat[2], lng: this.props.landmarks.lng[2] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[3], id: 3, lat: this.props.landmarks.lat[3], lng: this.props.landmarks.lng[3] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[4], id: 4, lat: this.props.landmarks.lat[4], lng: this.props.landmarks.lng[4] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[5], id: 5, lat: this.props.landmarks.lat[5], lng: this.props.landmarks.lng[5] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[6], id: 6, lat: this.props.landmarks.lat[6], lng: this.props.landmarks.lng[6] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[7], id: 7, lat: this.props.landmarks.lat[7], lng: this.props.landmarks.lng[7] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[8], id: 8, lat: this.props.landmarks.lat[8], lng: this.props.landmarks.lng[8] }),
+	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[9], id: 9, lat: this.props.landmarks.lat[9], lng: this.props.landmarks.lng[9] })
 	          )
 	        );
 	      } else {
@@ -24194,12 +24200,17 @@
 	  }
 	
 	  _createClass(Marker, [{
+	    key: "_handleClick",
+	    value: function _handleClick(event) {
+	      this.props.addindex(this.props.title);
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
 	        "div",
 	        null,
-	        _react2.default.createElement("i", { className: "fa fa-map-marker fa-2x", "aria-hidden": "true" })
+	        _react2.default.createElement("i", { onClick: this._handleClick.bind(this), className: "fa fa-map-marker fa-2x", "aria-hidden": "true" })
 	      );
 	    }
 	  }]);
@@ -24308,52 +24319,7 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          this.props.landmark[0]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[1]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[2]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[3]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[4]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[5]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[6]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[7]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[8]
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.landmark[9]
+	          this.props.display
 	        )
 	      );
 	    }
