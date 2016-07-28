@@ -6,9 +6,12 @@ class Search extends React.Component {
   constructor(props){
     super(props);
   }
+
   _handleSearch(event) {
     event.preventDefault();
     this.props.search(this.refs.loqalSearch.value);
+    console.log(this.props.display);
+    this.props.clear();
   }
   render(){
     return(
