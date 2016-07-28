@@ -24281,7 +24281,7 @@
 /* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -24311,16 +24311,20 @@
 	  }
 	
 	  _createClass(ListItem, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'ul',
+	        "ul",
 	        null,
 	        this.props.display.map(function (listValue) {
 	          return _react2.default.createElement(
-	            'li',
-	            null,
-	            listValue
+	            "div",
+	            { className: "landmarkBar" },
+	            _react2.default.createElement(
+	              "li",
+	              null,
+	              listValue
+	            )
 	          );
 	        })
 	      );
