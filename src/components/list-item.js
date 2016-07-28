@@ -10,7 +10,7 @@ class ListItem extends React.Component {
 
   render(){
     return(
-      <div>
+      <div >
         <p>{ this.props.landmark[0] }</p>
         <p>{ this.props.landmark[1] }</p>
         <p>{ this.props.landmark[2] }</p>

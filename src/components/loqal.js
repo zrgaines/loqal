@@ -111,7 +111,7 @@ wikiSummary(pageID) {
         <DestinationMap searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
         <List />
         <ListItem landmark={ this.state.title }/>
-      </div>
+      </div>  
     );
   }
 }

@@ -1,54 +1,64 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  height: 50%;
-  margin: 0;
-  background-image: url("https://cdn3.f-cdn.com/contestentries/362065/18471655/56d4fa32d1d02_thumb900.jpg");
 }
 
 a {
   color: #00B7FF;
 }
 
-html, body {
-  height: 100%;
-
-}
 #map {
   height: 400px;
   /*width:900px;*/
   width: 80%;
   margin:0 auto;
-  border:10px solid #20B2AA;
-  border-radius: 10px;
+  border-width:8px;
+  border-style:solid;
+  border-bottom-color:#aaa;
+  border-right-color:#aaa;
+  border-top-color:#aaa;
+  border-left-color:#aaa;
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
 }
 
+.mapContainer {
+  background-color: #998DA0;
+}
+
+#header {
+  height: 100px;
+  background-color: #2B2D42;
+}
 .marker {
 background-color: white;
 height: 20px;
 width: 20px;
 }
 
-.searchloqal{
-  margin-left:530px;
-}
-/*.searchsubmit{
-  margin-left:5px;
-}*/
-
 h1{
   font-family: 'Orbitron', sans-serif;
-  font-size:50px;
+  font-size:56px;
   color:white;
-  text-align: center;
+  padding: 20px;
+  margin: 0 !important;
 }
 
+form {
+  width: 80%;
+  text-align: center;
+  padding-top: 50px;
+  margin: 0 auto;
+}
+input[type=search] {
+  width: 30%;
+}
 .fa{
   color:red;
-
 }
 
 h3, p {
   color: white;
   text-align: center;
 }
+
