@@ -21253,7 +21253,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'mapContainer' },
 	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_destinationMap2.default, { searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
 	        _react2.default.createElement(_list2.default, null),

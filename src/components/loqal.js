@@ -106,12 +106,12 @@ wikiSummary(pageID) {
 
   render(){
     return(
-      <div>
+      <div className="mapContainer">
         <Search search={ this._fetchCity.bind(this) }/>
         <DestinationMap searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
         <List />
         <ListItem landmark={ this.state.title }/>
-      </div>
+      </div>  
     );
   }
 }
