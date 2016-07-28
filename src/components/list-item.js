@@ -9,7 +9,7 @@ class ListItem extends React.Component {
     return(
       <ul>
         {this.props.display.map(function(listValue) {
-          return <li>{listValue}</li>
+          return <div className="landmarkBar"><li>{listValue}</li></div>
         })
         }
       </ul>

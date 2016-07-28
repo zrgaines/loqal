@@ -67,3 +67,21 @@ h3, p {
   text-align: center;
 }
 
+ul {
+ list-style-type: none;
+ }
+
+.landmarkBar {
+  height: 50px;
+  width: 80%;
+  margin:0 auto;
+  border-width:2px;
+  border-style:solid;
+  border-bottom-color:#BBC2E2;
+  border-right-color:#BBC2E2;
+  border-top-color:#BBC2E2;
+  border-left-color:#BBC2E2;
+  border-radius:2px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+}
