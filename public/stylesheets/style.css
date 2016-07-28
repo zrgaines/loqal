@@ -13,10 +13,10 @@ a {
   margin:0 auto;
   border-width:8px;
   border-style:solid;
-  border-bottom-color:#aaa;
-  border-right-color:#aaa;
-  border-top-color:#aaa;
-  border-left-color:#aaa;
+  border-bottom-color:#BBC2E2;
+  border-right-color:#BBC2E2;
+  border-top-color:#BBC2E2;
+  border-left-color:#BBC2E2;
   border-radius:3px;
   -moz-border-radius:3px;
   -webkit-border-radius:3px;
@@ -29,6 +29,11 @@ a {
 #header {
   height: 100px;
   background-color: #2B2D42;
+}
+#secondHeader {
+  height: 10px;
+  background-color: #F7B801;
+
 }
 .marker {
 background-color: white;
