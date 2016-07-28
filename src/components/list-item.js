@@ -7,9 +7,12 @@ class ListItem extends React.Component {
   }
   render(){
     return(
-      <div>
-        <p>{this.props.display}</p>
-      </div>
+      <ul>
+        {this.props.display.map(function(listValue) {
+          return <li>{listValue}</li>
+        })
+        }
+      </ul>
     );
   }
 }

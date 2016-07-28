@@ -24314,13 +24314,15 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
+	        'ul',
 	        null,
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.display
-	        )
+	        this.props.display.map(function (listValue) {
+	          return _react2.default.createElement(
+	            'li',
+	            null,
+	            listValue
+	          );
+	        })
 	      );
 	    }
 	  }]);
