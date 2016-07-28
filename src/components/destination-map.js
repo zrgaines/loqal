@@ -7,9 +7,9 @@ class DestinationMap extends React.Component {
 
   
   render(){
-    return(
-      
-      <div id="map">
+    if(this.props.landmarks.lat.length > 0) {
+      return(
+        <div id="map">
             <GoogleMap
               zoom={16}
               defaultZoom={4}
@@ -36,8 +36,21 @@ class DestinationMap extends React.Component {
               </Marker>
               
             </GoogleMap>
-      </div>
-    );
+        </div>
+      );
+    }
+    else{
+      return(
+        <div id="map">
+            <GoogleMap
+              zoom={16}
+              defaultZoom={4}
+              center={{lat: this.props.searchLat, lng: this.props.searchLng}}>
+            </GoogleMap>
+          </div>
+      )
+    }
+    
   }
 }
 
