@@ -21153,7 +21153,8 @@
 	      img: [],
 	      displayListItems: [],
 	      searchLat: 36.964,
-	      searchLng: -95.015
+	      searchLng: -95.015,
+	      zoom: 2
 	    };
 	    return _this;
 	  }
@@ -21164,6 +21165,11 @@
 	      var displayArray = this.state.displayListItems;
 	      displayArray.push(index);
 	      this.setState({ displayListItems: displayArray });
+	    }
+	  }, {
+	    key: '_setZoom',
+	    value: function _setZoom(zoom) {
+	      this.setState({ zoom: zoom });
 	    }
 	  }, {
 	    key: '_fetchCity',
@@ -21266,8 +21272,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'mapContainer' },
-	        _react2.default.createElement(_search2.default, { clear: this._clearDisplays.bind(this), search: this._fetchCity.bind(this) }),
-	        _react2.default.createElement(_destinationMap2.default, { title: this.state.title, addindex: this._addIndexToDisplayListItems.bind(this), searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
+	        _react2.default.createElement(_search2.default, { setZoom: this._setZoom.bind(this), clear: this._clearDisplays.bind(this), search: this._fetchCity.bind(this) }),
+	        _react2.default.createElement(_destinationMap2.default, { zoom: this.state.zoom, title: this.state.title, addindex: this._addIndexToDisplayListItems.bind(this), searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
 	        _react2.default.createElement(_list2.default, null),
 	        _react2.default.createElement(_listItem2.default, { display: this.state.displayListItems, landmark: this.state.title })
 	      );
@@ -21331,6 +21337,7 @@
 	      this.props.search(this.refs.loqalSearch.value);
 	      console.log(this.props.display);
 	      this.props.clear();
+	      this.props.setZoom(16);
 	    }
 	  }, {
 	    key: "render",
@@ -21400,8 +21407,7 @@
 	          _react2.default.createElement(
 	            _googleMapReact2.default,
 	            {
-	              zoom: 16,
-	              defaultZoom: 4,
+	              zoom: this.props.zoom,
 	              center: { lat: this.props.searchLat, lng: this.props.searchLng } },
 	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[0], id: 0, lat: this.props.landmarks.lat[0], lng: this.props.landmarks.lng[0] }),
 	            _react2.default.createElement(_marker2.default, { className: 'marker', addindex: this.props.addindex.bind(this), title: this.props.title[1], id: 1, lat: this.props.landmarks.lat[1], lng: this.props.landmarks.lng[1] }),
@@ -21420,8 +21426,7 @@
 	          'div',
 	          { id: 'map' },
 	          _react2.default.createElement(_googleMapReact2.default, {
-	            zoom: 16,
-	            defaultZoom: 4,
+	            zoom: this.props.zoom,
 	            center: { lat: this.props.searchLat, lng: this.props.searchLng } })
 	        );
 	      }
