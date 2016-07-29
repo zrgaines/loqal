@@ -42,9 +42,9 @@ Search for another city if you want to start over.
 <a href="http://imgur.com/0EBCqQB"><img src="http://i.imgur.com/0EBCqQB.jpg" title="source: imgur.com" /></a>
 
 <h3>Unsolved problems:</h3> 
-    <ul>
-        <li>-Wanted wikipedia images as well as a summary paragraph to be included with each landmark, however, we would need more time with the API to get things more in order.</li>
-        <li>-Wanted a hover on a marker to show the Title, Picture, and Summary, so that it would make a bit more sense when you click a marker to add it to your list.</li>
-        <li>-In this version, you can not save data and have it persist through a refresh of the page. That is something we would want so users could revisit cities and see the landmarks they saved to visit if they are ever in the area.</li>
-        <li>-Wanted to set the initial state of the map before your search to be zoomed out and show a map of the world.</li>
-    </ul>
+    
+<p>Wanted wikipedia images as well as a summary paragraph to be included with each landmark, however, we would need more time with the API to get things more in order</p>
+<p>Wanted a hover on a marker to show the Title, Picture, and Summary, so that it would make a bit more sense when you click a marker to add it to your list.</p>
+<p>In this version, you can not save data and have it persist through a refresh of the page. That is something we would want so users could revisit cities and see the landmarks they saved to visit if they are ever in the area.</p>
+<p>Wanted to set the initial state of the map before your search to be zoomed out and show a map of the world.</p>
+    
