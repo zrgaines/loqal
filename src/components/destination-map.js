@@ -9,8 +9,7 @@ class DestinationMap extends React.Component {
       return(
         <div id="map">
             <GoogleMap
-              zoom={16}
-              defaultZoom={4}
+              zoom={this.props.zoom}
               center={{lat: this.props.searchLat, lng: this.props.searchLng}}>
               <Marker className="marker" addindex={this.props.addindex.bind(this)} title={this.props.title[0]} id={0} lat={this.props.landmarks.lat[0]} lng={this.props.landmarks.lng[0]} >
               </Marker>
@@ -40,14 +39,12 @@ class DestinationMap extends React.Component {
       return(
         <div id="map">
             <GoogleMap
-              zoom={16}
-              defaultZoom={4}
+              zoom={this.props.zoom}
               center={{lat: this.props.searchLat, lng: this.props.searchLng}}>
             </GoogleMap>
           </div>
       )
     }
-
   }
 }
 

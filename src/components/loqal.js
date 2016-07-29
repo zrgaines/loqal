@@ -15,13 +15,17 @@ class Loqal extends React.Component {
       img: [],
       displayListItems: [],
       searchLat: 36.964,
-      searchLng: -95.015
+      searchLng: -95.015,
+      zoom: 2
     }
   }
   _addIndexToDisplayListItems(index){
     var displayArray = this.state.displayListItems;
     displayArray.push(index)
     this.setState({displayListItems: displayArray});
+  }
+  _setZoom(zoom){
+    this.setState({zoom: zoom});
   }
   _fetchCity(searchTerm) {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?type=landmark&address=${searchTerm}&key=AIzaSyDs1TKDTMlNGnH_8VaZSCW0cy_8pmLfhIE`)
@@ -106,8 +110,8 @@ wikiImage(imageTitle) {
   render(){
     return(
       <div className="mapContainer">
-        <Search clear={this._clearDisplays.bind(this)} search={ this._fetchCity.bind(this) }/>
-        <DestinationMap title={this.state.title} addindex={this._addIndexToDisplayListItems.bind(this)} searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
+        <Search setZoom={this._setZoom.bind(this)} clear={this._clearDisplays.bind(this)} search={ this._fetchCity.bind(this) }/>
+        <DestinationMap zoom={this.state.zoom} title={this.state.title} addindex={this._addIndexToDisplayListItems.bind(this)} searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
         <List />
         <ListItem display={this.state.displayListItems} landmark={ this.state.title }/>
       </div>
