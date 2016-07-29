@@ -11,6 +11,7 @@ class Search extends React.Component {
     event.preventDefault();
     this.props.search(this.refs.loqalSearch.value);
     this.props.clear();
+    this.props.setZoom(16);
   }
   render(){
     return(
