@@ -21216,6 +21216,11 @@
 	      });
 	    }
 	  }, {
+	    key: '_clearDisplays',
+	    value: function _clearDisplays() {
+	      this.setState({ displayListItems: [] });
+	    }
+	  }, {
 	    key: 'wikiPage',
 	    value: function wikiPage(pageID) {
 	      var _this4 = this;
@@ -21251,7 +21256,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'mapContainer' },
-	        _react2.default.createElement(_search2.default, { search: this._fetchCity.bind(this) }),
+	        _react2.default.createElement(_search2.default, { clear: this._clearDisplays.bind(this), search: this._fetchCity.bind(this) }),
 	        _react2.default.createElement(_destinationMap2.default, { title: this.state.title, addindex: this._addIndexToDisplayListItems.bind(this), searchLat: this.state.searchLat, searchLng: this.state.searchLng, landmarks: this.state }),
 	        _react2.default.createElement(_list2.default, null),
 	        _react2.default.createElement(_listItem2.default, { display: this.state.displayListItems, landmark: this.state.title })
@@ -21314,6 +21319,7 @@
 	    value: function _handleSearch(event) {
 	      event.preventDefault();
 	      this.props.search(this.refs.loqalSearch.value);
+	      this.props.clear();
 	    }
 	  }, {
 	    key: "render",

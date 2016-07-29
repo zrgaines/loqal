@@ -72,6 +72,10 @@ class Loqal extends React.Component {
       })
 }
 
+_clearDisplays(){
+  this.setState({displayListItems: []});
+}
+
 wikiPage(pageID) {
     fetchJsonp(`https://en.wikipedia.org/w/api.php?action=query&prop=images&pageids=${pageID}&format=json`)
       .then((response) => {
@@ -102,7 +106,7 @@ wikiImage(imageTitle) {
   render(){
     return(
       <div className="mapContainer">
-        <Search search={ this._fetchCity.bind(this) }/>
+        <Search clear={this._clearDisplays.bind(this)} search={ this._fetchCity.bind(this) }/>
         <DestinationMap title={this.state.title} addindex={this._addIndexToDisplayListItems.bind(this)} searchLat={this.state.searchLat} searchLng={this.state.searchLng} landmarks={this.state} />
         <List />
         <ListItem display={this.state.displayListItems} landmark={ this.state.title }/>
