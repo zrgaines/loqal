@@ -21225,7 +21225,6 @@
 	    key: '_clearDisplays',
 	    value: function _clearDisplays() {
 	      this.setState({ displayListItems: [] });
-	      console.log('this is a test');
 	    }
 	  }, {
 	    key: 'wikiPage',
@@ -21254,15 +21253,6 @@
 	        arrayImg.push(json.query.pages[-1].imageinfo[0].url);
 	        _this5.setState({ img: arrayImg });
 	      }).catch(function (ex) {
-	        console.log('parsing failed', ex);
-	      });
-	    }
-	  }, {
-	    key: 'wikiSummary',
-	    value: function wikiSummary(pageID) {
-	      (0, _fetchJsonp2.default)('http://en.wikipedia.org/w/api.php?action=query&page=' + pageID + '&prop=text&section=0&format=json').then(function (response) {
-	        return response.json();
-	      }).then(function (json) {}).catch(function (ex) {
 	        console.log('parsing failed', ex);
 	      });
 	    }
@@ -21335,7 +21325,6 @@
 	    value: function _handleSearch(event) {
 	      event.preventDefault();
 	      this.props.search(this.refs.loqalSearch.value);
-	      console.log(this.props.display);
 	      this.props.clear();
 	      this.props.setZoom(16);
 	    }
