@@ -99,16 +99,6 @@ wikiImage(imageTitle) {
       })
 }
 
-wikiSummary(pageID) {
-  fetchJsonp(`http://en.wikipedia.org/w/api.php?action=query&page=${pageID}&prop=text&section=0&format=json`)
-      .then((response) => {
-        return response.json();
-      }).then((json) => {
-      }).catch(function(ex) {
-        console.log('parsing failed', ex)
-      })
-}
-
   render(){
     return(
       <div className="mapContainer">
