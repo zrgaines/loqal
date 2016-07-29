@@ -121,22 +121,15 @@ h3, p {
 }
 
 ul {
- list-style-type: none;
+  list-style-type: none;
+  padding-left: 0 !important;
  }
 
 .landmarkBar {
-  height: 80px;
   width: 80%;
-  margin:10px auto;
-  border-width:2px;
-  border-style:solid;
-  border-bottom-color:#BBC2E2;
-  border-right-color:#BBC2E2;
-  border-top-color:#BBC2E2;
-  border-left-color:#BBC2E2;
-  border-radius:2px;
-  -moz-border-radius:2px;
-  -webkit-border-radius:2px;
+  margin:5px auto;
+  color: white;
+  text-align: center;
 }
 
 #logo {
