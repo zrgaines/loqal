@@ -4,6 +4,8 @@ import DestinationMap from './destination-map';
 import List from './list';
 import ListItem from './list-item';
 import fetchJsonp from 'fetch-jsonp';
+import 'es6-promise';
+import 'whatwg-fetch';
 
 class Loqal extends React.Component {
   constructor(props){
